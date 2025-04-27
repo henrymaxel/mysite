@@ -18,10 +18,40 @@
         h1 {
             font-size: clamp(2rem, 5vw, 5rem);
             text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid white; /* Cursor effect */
+            animation: blink 0.7s step-end infinite;
+        }
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Hello, I'm Henry</h1>
+    <h1 id="typing"></h1>
+    <script>
+        const text = "Hello, I'm Henry";
+        const typingElement = document.getElementById("typing");
+        let index = 0;
+
+        function typeText() {
+            if (index < text.length) {
+                typingElement.textContent += text[index];
+                index++;
+                setTimeout(typeText, 150); // Adjust typing speed here
+            } else {
+                setTimeout(() => {
+                    typingElement.textContent = ""; // Clear text
+                    index = 0; // Reset index
+                    typeText(); // Restart typing
+                }, 5000); // Pause for 5 seconds
+            }
+        }
+
+        typeText();
+    </script>
 </body>
 </html>
